@@ -7,9 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * GKislin
@@ -26,14 +25,25 @@ public class UserMealsUtil {
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
         );
         //getFilteredWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12,0), 2000);
-        System.out.println(getFilteredWithExceededByCycle(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
+        System.out.println(getFilteredWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
 //        .toLocalDate();
 //        .toLocalTime();
     }
 
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        return null;
+        Map<LocalDate, Integer> mealHashMap = mealList.stream()
+                .collect(Collectors.toMap(UserMeal::getLocalDate, UserMeal::getCalories, (calories1, calories2) -> calories1 + calories2));
+
+        return mealList.stream()
+                .filter(m -> TimeUtil.isBetween(m.getDateTime().toLocalTime(), startTime, endTime))
+                .map(m -> {
+                    boolean exceed = mealHashMap.get(m.getLocalDate()) > caloriesPerDay;
+                    return new UserMealWithExceed(m.getDateTime(), m.getDescription(), m.getCalories(), exceed);
+                })
+                .collect(Collectors.toList());
+
     }
+
     public static List<UserMealWithExceed> getFilteredWithExceededByCycle(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         List<UserMealWithExceed> result = new ArrayList<>();
 
@@ -46,7 +56,6 @@ public class UserMealsUtil {
         }
         return result;
     }
-
 
     private static int getCaloriesPerThatDay(UserMeal userMeal, List<UserMeal> mealList) {
 
