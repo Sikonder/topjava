@@ -15,6 +15,7 @@
     <h3><a href="index.html">Home</a></h3>
     <h2>Meals</h2>
 
+
     <table>
         <tr>
             <th>Date</th>
@@ -23,7 +24,12 @@
             <th>Exceed</th>
         </tr>
         <c:forEach items="${list}" var="meal">
-            <tr>
+            <c:if test="${meal.isExceed()}">
+                <tr bgcolor="red">
+            </c:if>
+            <c:if test="${!meal.isExceed()}">
+                <tr bgcolor="green">
+            </c:if>
                 <td>${meal.getDateTime()}</td>
                 <td>${meal.getDescription()}</td>
                 <td>${meal.getCalories()}</td>
