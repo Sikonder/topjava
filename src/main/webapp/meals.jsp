@@ -16,7 +16,7 @@
     <h2>Meals</h2>
 
 
-    <table>
+    <table frame="border" bgcolor="aqua" border="5">
         <tr>
             <th>Date</th>
             <th>Description</th>
