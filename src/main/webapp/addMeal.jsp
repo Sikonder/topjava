@@ -17,6 +17,7 @@
     <hr>
     <h2><a href="meals">Show all meals</a></h2>
 </center>
+
 <div align="center">
     <c:if test="${meal != null}">
     <form action="update" method="post">
@@ -26,10 +27,10 @@
             </c:if>
             <table border="1" cellpadding="5">
                 <c:if test="${book != null}">
-                    <input type="hidden" name="id" value="<c:out value='${book.id}' />" />
+                    <input type="hidden" name="id" value="<c:out value='${book.id}' />"/>
                 </c:if>
                 <tr>
-                    <th>Date: </th>
+                    <th>Date:</th>
                     <td>
                         <input type="datetime-local" name="date" size="45"
                                value="<c:out value='${meal.dateTime}' />"
@@ -37,7 +38,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Description: </th>
+                    <th>Description:</th>
                     <td>
                         <input type="text" name="description" size="45"
                                value="<c:out value='${meal.description}' />"
@@ -45,7 +46,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Calories: </th>
+                    <th>Calories:</th>
                     <td>
                         <input type="number" name="calories" size="5"
                                value="<c:out value='${meal.calories}' />"
@@ -54,7 +55,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
-                        <input type="submit" value="Save" />
+                        <input type="submit" value="Save"/>
                     </td>
                 </tr>
             </table>

@@ -8,7 +8,13 @@ public class MealDao {
         MealsUtil.meals.add(meal);
     }
     public void deleteMeal(int id){
-        MealsUtil.meals.remove(id);
+        Meal mealToDelete = null;
+        for(Meal meal:MealsUtil.meals){
+            if(meal.getId()==id){
+                mealToDelete=meal;
+            }
+        }
+        MealsUtil.meals.remove(mealToDelete);
     }
     public void editMeal(){
         //TODO

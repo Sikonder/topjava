@@ -42,7 +42,7 @@
         <td>${meal.getDescription()}</td>
         <td>${meal.getCalories()}</td>
         <td>${meal.isExceed()}</td>
-        <td bgcolor="white"><a href="editMeal">Edit</a> <a href="deleteMeal.jsp">Delete</a></td>
+        <td bgcolor="white"><a href="editMeal.jsp">Edit</a> <a href="deleteMeal?mealId=${meal.getId()}">Delete</a></td>
         </tr>
     </c:forEach>
 

@@ -29,14 +29,7 @@ public class MealServlet extends HttpServlet {
         req.getRequestDispatcher("/meals.jsp").forward(req, resp);
 
 
-
-
-
-
     }
-
-
-
 
 
     @Override
