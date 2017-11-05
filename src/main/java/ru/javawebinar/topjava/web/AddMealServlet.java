@@ -34,7 +34,7 @@ public class AddMealServlet extends HttpServlet {
         meal.setId(MealsUtil.mealId++);
         mealDao.addMeal(meal);
 
-        log.info("Added new meal");
+        log.info("Added new meal: " + meal);
 
         resp.sendRedirect("meals");
     }

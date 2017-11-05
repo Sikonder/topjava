@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web;
 
+import org.slf4j.Logger;
 import ru.javawebinar.topjava.Dao.MealDao;
 import ru.javawebinar.topjava.model.Meal;
 
@@ -10,9 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class EditMealServlet extends HttpServlet {
     MealDao mealDao = new MealDao();
-
+    private static final Logger log = getLogger(AddMealServlet.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
@@ -45,6 +48,8 @@ public class EditMealServlet extends HttpServlet {
         meal.setId(id);
 
         mealDao.addMeal(meal);
+
+        log.debug(meal+" was edited");
 
         resp.sendRedirect("meals");
     }
