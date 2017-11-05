@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web;
 
+import org.slf4j.Logger;
 import ru.javawebinar.topjava.Dao.MealDao;
 import ru.javawebinar.topjava.model.Meal;
 
@@ -10,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class AddMealServlet extends HttpServlet{
     MealDao mealDao = new MealDao();
+    private static final Logger log = getLogger(AddMealServlet.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
@@ -26,6 +30,8 @@ public class AddMealServlet extends HttpServlet{
         int calories = Integer.parseInt(req.getParameter("calories"));
 
         mealDao.addMeal(new Meal(dateTime,description,calories));
+
+        log.info("Added new meal: "+new Meal(dateTime,description,calories));
 
         resp.sendRedirect("meals");
     }

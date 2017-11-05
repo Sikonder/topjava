@@ -42,7 +42,7 @@
         <td>${meal.getDescription()}</td>
         <td>${meal.getCalories()}</td>
         <td>${meal.isExceed()}</td>
-        <td bgcolor="white"><a href="editMeal.jsp">Edit</a> <a href="deleteMeal?mealId=${meal.getId()}">Delete</a></td>
+        <td bgcolor="white"><a href="editMeal?mealId=${meal.getId()}&mealDate=${meal.getDateTime()}&mealDesc=${meal.getDescription()}&mealCal=${meal.getCalories()}&mealEx=${meal.isExceed()}">Edit</a> <a href="deleteMeal?mealId=${meal.getId()}">Delete</a></td>
         </tr>
     </c:forEach>
 
