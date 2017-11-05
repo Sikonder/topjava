@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,7 +17,7 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toList;
 
 public class MealsUtil {
-    public static List<Meal> meals = new ArrayList<>(Arrays.asList(
+    public static List<Meal> meals = new CopyOnWriteArrayList<>(Arrays.asList(
             new Meal(LocalDateTime.of(2015, Month.MAY, 26, 10, 0), "Завтрак", 500),
             new Meal(LocalDateTime.of(2015, Month.MAY, 26, 13, 0), "Обед", 1000),
             new Meal(LocalDateTime.of(2015, Month.MAY, 26, 20, 0), "Ужин", 500),
@@ -38,7 +39,7 @@ public class MealsUtil {
     ));
 
 
-    public static int mealId = 0;
+    public volatile static int mealId = 0;
 
     public static void main(String[] args) {
         List<Meal> meals = Arrays.asList(
@@ -83,7 +84,7 @@ public class MealsUtil {
         Collections.sort(result, new Comparator<MealWithExceed>() {
             @Override
             public int compare(MealWithExceed o1, MealWithExceed o2) {
-                if(o1.getDateTime().isBefore(o2.getDateTime())){
+                if (o1.getDateTime().isBefore(o2.getDateTime())) {
                     return -1;
                 }
                 return 1;
@@ -152,6 +153,6 @@ public class MealsUtil {
     }
 
     public static MealWithExceed createWithExceed(Meal meal, boolean exceeded) {
-        return new MealWithExceed(meal.getId(),meal.getDateTime(), meal.getDescription(), meal.getCalories(), exceeded);
+        return new MealWithExceed(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), exceeded);
     }
 }

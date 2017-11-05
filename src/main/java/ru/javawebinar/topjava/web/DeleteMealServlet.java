@@ -11,16 +11,17 @@ import java.io.IOException;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class DeleteMealServlet extends HttpServlet{
+public class DeleteMealServlet extends HttpServlet {
     MealDao mealDao = new MealDao();
     private static final Logger log = getLogger(DeleteMealServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         int id = Integer.parseInt(req.getParameter("mealId"));
         mealDao.deleteMeal(id);
 
-        log.info("Meal with id:"+id+" was deleted");
+        log.info("Meal with id:" + id + " was deleted");
 
         resp.sendRedirect("meals");
     }

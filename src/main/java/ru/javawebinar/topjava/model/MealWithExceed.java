@@ -33,8 +33,8 @@ public class MealWithExceed {
         return exceed;
     }
 
-    public MealWithExceed(int id,LocalDateTime dateTime, String description, int calories, boolean exceed) {
-        this.id=id;
+    public MealWithExceed(int id, LocalDateTime dateTime, String description, int calories, boolean exceed) {
+        this.id = id;
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
