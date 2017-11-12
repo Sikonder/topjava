@@ -37,6 +37,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public boolean delete(int id, int userId) {
+        log.info("delete {}", id);
         Meal result = repository.get(id);
         if (result.getUserId().equals(userId)) {
             repository.remove(id);
@@ -49,6 +50,8 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
+        log.info("get {}", id);
+
         Meal result = repository.get(id);
         if (result.getUserId().equals(userId)) {
             return result;
