@@ -6,13 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.Role;
-import ru.javawebinar.topjava.model.User;
-import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.repository.mock.InMemoryMealRepositoryImpl;
-import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
-import ru.javawebinar.topjava.web.user.AdminRestController;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -65,7 +59,7 @@ public class MealServlet extends HttpServlet {
             case "delete":
                 int id = getId(request);
                 log.info("Delete {}", id);
-                mealRestController.delete(id, AuthorizedUser.id());
+                mealRestController.delete(id);
                 response.sendRedirect("meals");
                 break;
             case "create":
@@ -83,18 +77,18 @@ public class MealServlet extends HttpServlet {
                     log.info("getFilteredByDate");
                     LocalDate to = LocalDate.parse(request.getParameter("dateTo"));
                     LocalDate from = LocalDate.parse(request.getParameter("dateFrom"));
-                    request.setAttribute("meals", mealRestController.getFilteredByDate(AuthorizedUser.id(), from, to));
+                    request.setAttribute("meals", mealRestController.getFilteredByDate(from, to));
                     request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 } else if (request.getParameter("timeTo") != null && request.getParameter("timeFrom") != null &&
                         request.getParameter("timeTo") != "" && request.getParameter("timeFrom") != "") {
                     LocalTime from = LocalTime.parse(request.getParameter("timeFrom"));
                     LocalTime to = LocalTime.parse(request.getParameter("timeTo"));
-                    request.setAttribute("meals", mealRestController.getFilteredByTime(AuthorizedUser.id(), from, to));
+                    request.setAttribute("meals", mealRestController.getFilteredByTime(from, to));
                     request.getRequestDispatcher("/meals.jsp").forward(request, response);
 
                 } else {
                     log.info("getAll");
-                    request.setAttribute("meals", mealRestController.getAll(AuthorizedUser.id()));
+                    request.setAttribute("meals", mealRestController.getAll());
                     request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 }
                 break;

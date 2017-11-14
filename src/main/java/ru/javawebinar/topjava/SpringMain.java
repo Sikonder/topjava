@@ -34,7 +34,7 @@ public class SpringMain {
             mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500));
             mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510));
             System.out.println("--------------------------------------------------");
-            mealRestController.delete(6, AuthorizedUser.id());
+            mealRestController.delete(6);
             System.out.println("--------------------------------------------------");
             mealRestController.update(new Meal(LocalDateTime.of(2017, Month.MAY, 30, 10, 0), "Новый Завтрак", 555), 1);
             System.out.println("--------------------------------------------------");
@@ -44,9 +44,9 @@ public class SpringMain {
             System.out.println("--------------------------------------------------");
             System.out.println(adminUserController.getByMail("emailTest"));
             System.out.println("--------------------------------------------------");
-            System.out.println(mealRestController.getFilteredByDate(AuthorizedUser.id(),LocalDate.of(2015, Month.MAY, 31),LocalDate.of(2015, Month.MAY, 31)));
+            System.out.println(mealRestController.getFilteredByDate(LocalDate.of(2015, Month.MAY, 31),LocalDate.of(2015, Month.MAY, 31)));
             System.out.println("--------------------------------------------------");
-            System.out.println(mealRestController.getAll(AuthorizedUser.id()));
+            System.out.println(mealRestController.getAll());
         }
     }
 }

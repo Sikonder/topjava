@@ -4,11 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealWithExceed;
-import ru.javawebinar.topjava.util.MealsUtil;
 
 
 import java.time.LocalDate;
@@ -32,9 +32,9 @@ public class MealRestController {
         return service.create(meal);
     }
 
-    public void delete(int id, int userId) {
+    public void delete(int id) {
         log.info("delete {}", id);
-        service.delete(id, userId);
+        service.delete(id, AuthorizedUser.id());
     }
 
     public Meal get(int id, int userId) {
@@ -42,9 +42,9 @@ public class MealRestController {
         return service.get(id, userId);
     }
 
-    public Collection<MealWithExceed> getAll(int userId) {
+    public Collection<MealWithExceed> getAll() {
         log.info("getAll");
-        return service.getAll(userId);
+        return service.getAll(AuthorizedUser.id());
     }
 
     public void update(Meal meal, int id) {
@@ -53,14 +53,14 @@ public class MealRestController {
         service.update(meal);
     }
 
-    public Collection<MealWithExceed> getFilteredByDate(int userId, LocalDate start, LocalDate end){
+    public Collection<MealWithExceed> getFilteredByDate(LocalDate start, LocalDate end){
         log.info("getFilteredByDate");
-        return service.getFilteredByDate(userId, start, end);
+        return service.getFilteredByDate(AuthorizedUser.id(), start, end);
     }
 
-    public Collection<MealWithExceed> getFilteredByTime(int userId, LocalTime start, LocalTime end) {
+    public Collection<MealWithExceed> getFilteredByTime(LocalTime start, LocalTime end) {
         log.info("getFilteredByTime");
-        return service.getFilteredByTime(userId,start,end);
+        return service.getFilteredByTime(AuthorizedUser.id(),start,end);
     }
 
 }
