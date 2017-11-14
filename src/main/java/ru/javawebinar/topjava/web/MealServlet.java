@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Objects;
@@ -76,9 +78,25 @@ public class MealServlet extends HttpServlet {
                 break;
             case "all":
             default:
-                log.info("getAll");
-                request.setAttribute("meals", mealRestController.getAll(AuthorizedUser.id()));
-                request.getRequestDispatcher("/meals.jsp").forward(request, response);
+                if (request.getParameter("dateTo") != null && request.getParameter("dateFrom") != null &&
+                        request.getParameter("dateTo") != "" && request.getParameter("dateFrom") != "") {
+                    log.info("getFilteredByDate");
+                    LocalDate to = LocalDate.parse(request.getParameter("dateTo"));
+                    LocalDate from = LocalDate.parse(request.getParameter("dateFrom"));
+                    request.setAttribute("meals", mealRestController.getFilteredByDate(AuthorizedUser.id(), from, to));
+                    request.getRequestDispatcher("/meals.jsp").forward(request, response);
+                } else if (request.getParameter("timeTo") != null && request.getParameter("timeFrom") != null &&
+                        request.getParameter("timeTo") != "" && request.getParameter("timeFrom") != "") {
+                    LocalTime from = LocalTime.parse(request.getParameter("timeFrom"));
+                    LocalTime to = LocalTime.parse(request.getParameter("timeTo"));
+                    request.setAttribute("meals", mealRestController.getFilteredByTime(AuthorizedUser.id(), from, to));
+                    request.getRequestDispatcher("/meals.jsp").forward(request, response);
+
+                } else {
+                    log.info("getAll");
+                    request.setAttribute("meals", mealRestController.getAll(AuthorizedUser.id()));
+                    request.getRequestDispatcher("/meals.jsp").forward(request, response);
+                }
                 break;
         }
     }

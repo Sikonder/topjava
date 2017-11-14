@@ -15,6 +15,24 @@
             color: red;
         }
     </style>
+    <style>
+        dl {
+            background: none repeat scroll 0 0 #FAFAFA;
+            margin: 8px 0;
+            padding: 0;
+        }
+
+        dt {
+            display: inline-block;
+            width: 170px;
+        }
+
+        dd {
+            display: inline-block;
+            margin-left: 8px;
+            vertical-align: top;
+        }
+    </style>
 </head>
 <body>
 <section>
@@ -22,6 +40,36 @@
     <h2>Meals</h2>
     <a href="meals?action=create">Add Meal</a>
     <hr/>
+    <h3>Filter by date: </h3>
+    <form action="meals">
+        <input type="hidden">
+        <dl>
+            <dt>From:</dt>
+            <dd><input type="date" name="dateFrom"></dd>
+        </dl>
+        <dl>
+            <dt>To:</dt>
+            <dd><input type="date" name="dateTo"></dd>
+        </dl>
+
+        <button type="submit">Filter by date</button>
+    </form>
+    <hr>
+    <h3>Filter by time: </h3>
+    <form action="meals">
+        <input type="hidden">
+        <dl>
+            <dt>From:</dt>
+            <dd><input type="time" name="timeFrom"></dd>
+        </dl>
+        <dl>
+            <dt>To:</dt>
+            <dd><input type="time" name="timeTo"></dd>
+        </dl>
+
+        <button type="submit">Filter by time</button>
+    </form>
+    <hr>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>

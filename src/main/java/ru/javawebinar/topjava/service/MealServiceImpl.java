@@ -7,6 +7,8 @@ import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 
 
@@ -44,5 +46,15 @@ public class MealServiceImpl implements MealService {
     @Override
     public void update(Meal meal) {
         repository.save(meal);
+    }
+
+    @Override
+    public Collection<MealWithExceed> getFilteredByDate(int userId, LocalDate start, LocalDate end) {
+        return MealsUtil.getWithExceeded(repository.getFilteredByDate(userId, start, end), MealsUtil.DEFAULT_CALORIES_PER_DAY);
+    }
+
+    @Override
+    public Collection<MealWithExceed> getFilteredByTime(int userId, LocalTime start, LocalTime end) {
+        return MealsUtil.getWithExceeded(repository.getFilteredByTime(userId, start, end), MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 }

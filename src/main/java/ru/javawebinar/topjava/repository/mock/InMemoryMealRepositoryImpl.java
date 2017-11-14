@@ -6,8 +6,11 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -65,6 +68,32 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         log.info("getAll");
         List<Meal> result = repository.values().stream()
                 .filter(x -> userId == x.getUserId())
+                .sorted(Comparator.comparing(Meal::getDateTime))
+                .collect(toList());
+        Collections.reverse(result);
+
+        return result;
+    }
+
+    @Override
+    public Collection<Meal> getFilteredByDate(int userId, LocalDate start, LocalDate end) {
+        log.info("getFilteredByDate");
+        List<Meal> result = repository.values().stream()
+                .filter(x -> userId == x.getUserId())
+                .filter(x -> DateTimeUtil.isBetweenDate(x.getDateTime().toLocalDate(),start,end))
+                .sorted(Comparator.comparing(Meal::getDateTime))
+                .collect(toList());
+        Collections.reverse(result);
+
+        return result;
+    }
+
+    @Override
+    public Collection<Meal> getFilteredByTime(int userId, LocalTime start, LocalTime end) {
+        log.info("getFilteredByDate");
+        List<Meal> result = repository.values().stream()
+                .filter(x -> userId == x.getUserId())
+                .filter(x -> DateTimeUtil.isBetween(x.getDateTime().toLocalTime(),start,end))
                 .sorted(Comparator.comparing(Meal::getDateTime))
                 .collect(toList());
         Collections.reverse(result);

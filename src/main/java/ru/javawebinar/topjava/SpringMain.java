@@ -24,9 +24,12 @@ public class SpringMain {
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
 
             System.out.println("--------------------------------------------------");
-            mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
-            mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000));
-            mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500));
+            mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 29, 10, 0), "Завтрак", 500));
+            mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 29, 13, 0), "Обед", 1000));
+            mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 29, 20, 0), "Ужин", 500));
+            mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 1000));
+            mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 500));
+            mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 510));
             mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Завтрак", 1000));
             mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500));
             mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510));
@@ -40,6 +43,8 @@ public class SpringMain {
             System.out.println(adminUserController.getAll());
             System.out.println("--------------------------------------------------");
             System.out.println(adminUserController.getByMail("emailTest"));
+            System.out.println("--------------------------------------------------");
+            System.out.println(mealRestController.getFilteredByDate(AuthorizedUser.id(),LocalDate.of(2015, Month.MAY, 31),LocalDate.of(2015, Month.MAY, 31)));
             System.out.println("--------------------------------------------------");
             System.out.println(mealRestController.getAll(AuthorizedUser.id()));
         }

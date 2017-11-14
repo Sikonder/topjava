@@ -14,7 +14,7 @@ public class AuthorizedUser {
     }
 
     public static int id() {
-        return getId();
+        return 1;
     }
 
     public static int getCaloriesPerDay() {
