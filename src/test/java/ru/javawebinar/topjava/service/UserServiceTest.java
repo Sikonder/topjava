@@ -61,6 +61,7 @@ public class UserServiceTest {
 
     @Test
     public void get() throws Exception {
+        System.out.println(service.get(USER_ID));
         User user = service.get(USER_ID);
         assertMatch(user, USER);
     }

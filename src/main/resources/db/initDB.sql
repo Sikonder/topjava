@@ -32,7 +32,7 @@ CREATE TABLE meals
   user_id INTEGER NOT NULL,
   description VARCHAR NOT NULL,
   calories INT NOT NULL,
-  dateTime TIMESTAMP NOT NULL,
+  date_time TIMESTAMP NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
