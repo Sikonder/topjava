@@ -7,14 +7,19 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@Entity
+@Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = "date_time", name = "meals_unique_user_datetime_idx")})
 public class Meal extends AbstractBaseEntity {
-
+    @Column(name="date_time",nullable = false,unique = true)
+    @NotNull
     private LocalDateTime dateTime;
 
-
+    @Column(name = "description",nullable = false)
+    @NotBlank
     private String description;
 
-
+    @Column(name="calories",nullable = false)
+    @NotNull
     private int calories;
 
     public Meal(LocalDateTime dateTime, String description, int calories) {
@@ -22,7 +27,8 @@ public class Meal extends AbstractBaseEntity {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    //@JoinColumn(name="user_id")
     private User user;
 
     public Meal() {
@@ -85,5 +91,27 @@ public class Meal extends AbstractBaseEntity {
                 ", description='" + description + '\'' +
                 ", calories=" + calories +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Meal meal = (Meal) o;
+
+        if (calories != meal.calories) return false;
+        if (dateTime != null ? !dateTime.equals(meal.dateTime) : meal.dateTime != null) return false;
+        return description != null ? description.equals(meal.description) : meal.description == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + calories;
+        return result;
     }
 }

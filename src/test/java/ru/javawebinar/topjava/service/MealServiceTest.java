@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -10,6 +11,14 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
+
+import org.hamcrest.collection.IsEmptyCollection;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -36,7 +45,8 @@ public class MealServiceTest {
     @Test
     public void testDelete() throws Exception {
         service.delete(MEAL1_ID, USER_ID);
-        assertMatch(service.getAll(USER_ID), MEAL6, MEAL5, MEAL4, MEAL3, MEAL2);
+        //assertMatch(service.getAll(USER_ID), MEAL6, MEAL5, MEAL4, MEAL3, MEAL2);
+        assertThat(service.getAll(USER_ID), contains(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2));
     }
 
     @Test(expected = NotFoundException.class)
@@ -48,13 +58,16 @@ public class MealServiceTest {
     public void testSave() throws Exception {
         Meal created = getCreated();
         service.create(created, USER_ID);
-        assertMatch(service.getAll(USER_ID), created, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
+        assertThat(service.getAll(USER_ID), contains(created, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1));
+        //assertMatch(service.getAll(USER_ID), created, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
     }
 
     @Test
     public void testGet() throws Exception {
         Meal actual = service.get(ADMIN_MEAL_ID, ADMIN_ID);
-        assertMatch(actual, ADMIN_MEAL1);
+        Assert.assertEquals(actual, ADMIN_MEAL1);
+        //assertMatch(actual,ADMIN_MEAL1);
+        //assertMatch(actual, ADMIN_MEAL1);
     }
 
     @Test(expected = NotFoundException.class)
@@ -66,7 +79,8 @@ public class MealServiceTest {
     public void testUpdate() throws Exception {
         Meal updated = getUpdated();
         service.update(updated, USER_ID);
-        assertMatch(service.get(MEAL1_ID, USER_ID), updated);
+        Assert.assertEquals(service.get(MEAL1_ID, USER_ID), updated);
+        //assertMatch(service.get(MEAL1_ID, USER_ID), updated);
     }
 
     @Test(expected = NotFoundException.class)
@@ -76,13 +90,18 @@ public class MealServiceTest {
 
     @Test
     public void testGetAll() throws Exception {
-        assertMatch(service.getAll(USER_ID), MEALS);
+        assertThat(service.getAll(USER_ID), is(MEALS));
+        // assertMatch(service.getAll(USER_ID), MEALS);
+
     }
 
     @Test
     public void testGetBetween() throws Exception {
-        assertMatch(service.getBetweenDates(
+        assertThat(service.getBetweenDates(
                 LocalDate.of(2015, Month.MAY, 30),
-                LocalDate.of(2015, Month.MAY, 30), USER_ID), MEAL3, MEAL2, MEAL1);
+                LocalDate.of(2015, Month.MAY, 30), USER_ID), contains(MEAL3, MEAL2, MEAL1));
+//        assertMatch(service.getBetweenDates(
+//                LocalDate.of(2015, Month.MAY, 30),
+//                LocalDate.of(2015, Month.MAY, 30), USER_ID), MEAL3, MEAL2, MEAL1);
     }
 }
