@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.ValidationUtil;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,8 +22,14 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public Meal save(Meal Meal, int userId) {
-        //TODO
-        return Meal;
+        if (!Meal.isNew() && get(Meal.getId(), userId) == null) {
+            return null;
+        }
+        User ref = new User();
+        ref.setId(userId);
+        Meal.setUser(ref);
+        return crudRepository.save(Meal);
+
     }
 
     @Override
@@ -33,8 +40,7 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
-
-        return ValidationUtil.checkNotFound(crudRepository.findMealByIdAndUserId(id, userId), " id = " + id);
+        return crudRepository.findMealByIdAndUserId(id, userId);
     }
 
     @Override
