@@ -115,6 +115,7 @@
         </dependency>
 
 
+
         <!--DataBase-->
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -219,6 +220,29 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+        </profile>
+        <profile>
+            <id>datajpa</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.data</groupId>
+                    <artifactId>spring-data-jpa</artifactId>
+                    <version>2.0.2.RELEASE</version>
+                </dependency>
+            </dependencies>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>jpa</id>
+            <dependencies>
+
+            </dependencies>
+        </profile>
+        <profile>
+            <id>jdbc</id>
+
         </profile>
     </profiles>
 

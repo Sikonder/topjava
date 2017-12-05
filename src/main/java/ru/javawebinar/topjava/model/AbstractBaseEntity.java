@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.model;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
 
+
 import javax.persistence.*;
 
 @MappedSuperclass

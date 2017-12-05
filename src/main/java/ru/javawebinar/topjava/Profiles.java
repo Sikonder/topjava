@@ -26,4 +26,24 @@ public class Profiles {
             }
         }
     }
+
+    public static String getActiveRepositoryProfile() {
+            return REPOSITORY_IMPLEMENTATION;
+        //        try {
+//            Class.forName("org.springframework.data.jpa.repository.JpaRepository");
+//            return DATAJPA;
+//        } catch (ClassNotFoundException e) {
+//            try {
+//                Class.forName("org.springframework.dao.support.DataAccessUtils;");
+//                return JPA;
+//            } catch (ClassNotFoundException e1) {
+//                try {
+//                    Class.forName("org.springframework.jdbc.core.RowMapper");
+//                    return JDBC;
+//                } catch (ClassNotFoundException e2) {
+//                    throw new IllegalStateException("Could not find Repo");
+//                }
+//            }
+//        }
+    }
 }
