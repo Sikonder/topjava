@@ -16,12 +16,12 @@ abstract public class AbstractJpaUserServiceTest extends AbstractUserServiceTest
     @Autowired
     private JpaUtil jpaUtil;
 
-    @Before
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-        jpaUtil.clear2ndLevelHibernateCache();
-    }
+//    @Before
+//    @Override
+//    public void setUp() throws Exception {
+//        super.setUp();
+//        jpaUtil.clear2ndLevelHibernateCache();
+//    }
 
     @Test
     public void testValidation() throws Exception {
@@ -31,4 +31,5 @@ abstract public class AbstractJpaUserServiceTest extends AbstractUserServiceTest
         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "password", 9, true, new Date(), Collections.emptySet())), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "password", 10001, true, new Date(), Collections.emptySet())), ConstraintViolationException.class);
     }
+
 }
