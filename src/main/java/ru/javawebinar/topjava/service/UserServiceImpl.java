@@ -61,12 +61,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void enable(int id, boolean enabled)
-
     {
         User user = get(id);
         user.setEnabled(enabled);
         repository.save(user);
     }
+
 
     @Override
     public User getWithMeals(int id) {
