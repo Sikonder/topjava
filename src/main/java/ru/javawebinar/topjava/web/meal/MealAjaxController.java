@@ -23,6 +23,11 @@ import java.util.StringJoiner;
 @RequestMapping(value = "/ajax/profile/meals")
 public class MealAjaxController extends AbstractMealController {
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public Meal get(@PathVariable("id") int id) {
+        return super.get(id);
+    }
+
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MealWithExceed> getAll() {
@@ -49,7 +54,18 @@ public class MealAjaxController extends AbstractMealController {
 //    }
 
     @PostMapping
-    public ResponseEntity<String> createOrUpdate(MealTo meal, BindingResult result) {
+    public ResponseEntity<String> createOrUpdate(@Valid MealTo meal, BindingResult result) {
+        ResponseEntity<String> joiner = getResponseEntity(result);
+        if (joiner != null) return joiner;
+        if (meal.isNew()) {
+            super.create(MealsUtil.createNewFromTo(meal));
+        }else {
+            super.update(meal, meal.getId());
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public static ResponseEntity<String> getResponseEntity(BindingResult result) {
         if (result.hasErrors()) {
             StringJoiner joiner = new StringJoiner("<br>");
             result.getFieldErrors().forEach(
@@ -62,12 +78,7 @@ public class MealAjaxController extends AbstractMealController {
                     });
             return new ResponseEntity<>(joiner.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        if (meal.isNew()) {
-            super.create(MealsUtil.createNewFromTo(meal));
-        }else {
-            super.update(meal, AuthorizedUser.id());
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return null;
     }
 
     @Override
