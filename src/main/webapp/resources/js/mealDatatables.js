@@ -58,8 +58,8 @@ $(function () {
         "columns": [
             {
                 "data": "dateTime",
-                "render": function (date, type, row) {
-                    if (type === "display") {
+                "render": function (date) {
+                    if (date) {
                         return date.substring(0, 10);
                     }
                     return date;

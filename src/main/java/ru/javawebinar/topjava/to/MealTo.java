@@ -17,9 +17,11 @@ public class MealTo extends BaseTo implements Serializable {
     private LocalDateTime dateTime;
 
     @NotBlank
+    @Size(min = 2, max = 120)
     private String description;
 
     @NotNull
+    @Range(min = 10, max = 5000)
     private int calories;
 
     public MealTo(Integer id, LocalDateTime dateTime, String description, int calories) {

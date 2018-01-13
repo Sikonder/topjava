@@ -65,7 +65,6 @@
         <br/>
 
 
-
         <a class="btn btn-primary" onclick="add()">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             <spring:message code="common.add"/>
