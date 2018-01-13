@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -47,6 +48,20 @@ public abstract class AbstractMealController {
         checkNew(meal);
         log.info("create {} for user {}", meal, userId);
         return service.create(meal, userId);
+    }
+
+    public Meal create(MealTo meal) {
+        int userId = AuthorizedUser.id();
+        checkNew(meal);
+        log.info("create {} for user {}", meal, userId);
+        return service.create(MealsUtil.createNewFromTo(meal), userId);
+    }
+
+    public void update(MealTo meal, int id) {
+        int userId = AuthorizedUser.id();
+        assureIdConsistent(meal, id);
+        log.info("update {} for user {}", meal, userId);
+        service.update(meal, userId);
     }
 
     public void update(Meal meal, int id) {

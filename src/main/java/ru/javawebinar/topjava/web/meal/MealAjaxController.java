@@ -8,8 +8,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.to.MealWithExceed;
+import ru.javawebinar.topjava.util.MealsUtil;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -40,11 +43,13 @@ public class MealAjaxController extends AbstractMealController {
 //        Meal meal = new Meal(id, dateTime, description, calories);
 //        if (meal.isNew()) {
 //            super.create(meal);
+//        }else {
+//            super.update(meal,AuthorizedUser.id());
 //        }
 //    }
 
     @PostMapping
-    public ResponseEntity<String> createOrUpdate(Meal meal, BindingResult result) {
+    public ResponseEntity<String> createOrUpdate(MealTo meal, BindingResult result) {
         if (result.hasErrors()) {
             StringJoiner joiner = new StringJoiner("<br>");
             result.getFieldErrors().forEach(
@@ -58,7 +63,7 @@ public class MealAjaxController extends AbstractMealController {
             return new ResponseEntity<>(joiner.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
         if (meal.isNew()) {
-            super.create(meal);
+            super.create(MealsUtil.createNewFromTo(meal));
         }else {
             super.update(meal, AuthorizedUser.id());
         }

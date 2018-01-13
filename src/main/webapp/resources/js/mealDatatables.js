@@ -14,27 +14,73 @@ function clearFilter() {
     $.get(ajaxUrl, updateTableByData);
 }
 
+// $(function () {
+//     datatableApi = $("#datatable").DataTable({
+//         "paging": false,
+//         "info": true,
+//         "columns": [
+//             {
+//                 "data": "dateTime"
+//             },
+//             {
+//                 "data": "description"
+//             },
+//             {
+//                 "data": "calories"
+//             },
+//             {
+//                 "defaultContent": "Edit",
+//                 "orderable": false
+//             },
+//             {
+//                 "defaultContent": "Delete",
+//                 "orderable": false
+//             }
+//         ],
+//         "order": [
+//             [
+//                 0,
+//                 "desc"
+//             ]
+//         ]
+//     });
+//     makeEditable();
+// });
+
 $(function () {
     datatableApi = $("#datatable").DataTable({
+        "ajax": {
+            "url": ajaxUrl,
+            "dataSrc": ""
+        },
         "paging": false,
         "info": true,
         "columns": [
             {
-                "data": "dateTime"
+                "data": "dateTime",
+                "render": function (date, type, row) {
+                    if (type === "display") {
+                        return date.substring(0, 10);
+                    }
+                    return date;
+                }
             },
             {
                 "data": "description"
             },
             {
                 "data": "calories"
+
             },
             {
-                "defaultContent": "Edit",
-                "orderable": false
+                "orderable": false,
+                "defaultContent": "",
+                "render": renderEditBtn
             },
             {
-                "defaultContent": "Delete",
-                "orderable": false
+                "orderable": false,
+                "defaultContent": "",
+                "render": renderDeleteBtn
             }
         ],
         "order": [
@@ -42,7 +88,12 @@ $(function () {
                 0,
                 "desc"
             ]
-        ]
+        ],
+        "createdRow": function (row, data, dataIndex) {
+            if (!data.enabled) {
+                $(row).addClass("disabled");
+            }
+        },
+        "initComplete": makeEditable
     });
-    makeEditable();
 });

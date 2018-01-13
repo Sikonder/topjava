@@ -8,18 +8,16 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class MealWithExceed extends BaseTo {
-    @NotBlank
+
     private final LocalDateTime dateTime;
 
-    @NotBlank
-    @Size(min = 2, max = 120)
+
     private final String description;
 
-    @NotBlank
-    @Range(min = 10, max = 5000)
+
     private final int calories;
 
-    @NotBlank
+
     private final boolean exceed;
 
     public MealWithExceed(Integer id, LocalDateTime dateTime, String description, int calories, boolean exceed) {
