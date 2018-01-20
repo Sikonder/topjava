@@ -44,5 +44,33 @@ public class RootController extends AbstractUserController {
         return "profile";
     }
 
+    @PostMapping("/profile")
+    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
+        if (result.hasErrors()) {
+            return "profile";
+        } else {
+            super.update(userTo, AuthorizedUser.id());
+            status.setComplete();
+            return "redirect:meals";
+        }
+    }
 
+    @GetMapping("/register")
+    public String register(ModelMap model) {
+        model.addAttribute("userTo", new UserTo());
+        model.addAttribute("register", true);
+        return "profile";
+    }
+
+    @PostMapping("/register")
+    public String saveRegister(@Valid UserTo userTo, BindingResult result, SessionStatus status, ModelMap model) {
+        if (result.hasErrors()) {
+            model.addAttribute("register", true);
+            return "profile";
+        } else {
+            super.create(UserUtil.createNewFromTo(userTo));
+            status.setComplete();
+            return "redirect:login?message=app.registered&username=" + userTo.getEmail();
+        }
+    }
 }
