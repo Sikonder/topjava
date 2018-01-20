@@ -1,10 +1,14 @@
 package ru.javawebinar.topjava.web.json;
 
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.Test;
+import ru.javawebinar.topjava.View;
 import ru.javawebinar.topjava.model.Meal;
 
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static ru.javawebinar.topjava.MealTestData.*;
 
 public class JsonUtilTest {
@@ -24,4 +28,6 @@ public class JsonUtilTest {
         List<Meal> meals = JsonUtil.readValues(json, Meal.class);
         assertMatch(meals, MEALS);
     }
+
+
 }
